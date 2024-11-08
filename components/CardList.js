@@ -4,6 +4,10 @@ import axios from 'axios';
 
 const API_BASE_URL = 'https://db.ygoprodeck.com/api/v7/';
 
+const getValueOrUnknown = (value) => {
+  return (value && value !== '') ? value : 'Unknown';
+};
+
 const fetchCards = async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}cardinfo.php`);
@@ -37,22 +41,22 @@ const CardList = ({ navigation }) => {
   const handleCardPress = (card) => {
     setSelectedCard(card);
     setModalVisible(true);
-  };
+  };64163367
 
   const renderCardDetails = () => {
     if (!selectedCard) return null;
 
     return (
       <View style={styles.modalContent}>
-        <Image source={{ uri: selectedCard.card_images[0].image_url }} style={styles.modalImage} />
-        <Text style={styles.modalTitle}>{selectedCard.name}</Text>
-        <Text style={styles.modalDescription}>ID: {selectedCard.id}</Text>
-        <Text style={styles.modalDescription}>Tipo: {selectedCard.type}</Text>
-        <Text style={styles.modalDescription}>Ataque: {selectedCard.atk}</Text>
-        <Text style={styles.modalDescription}>Defesa: {selectedCard.def}</Text>
-        <Text style={styles.modalDescription}>Atributo: {selectedCard.attribute}</Text>
-        <Text style={styles.modalDescription}>level: {selectedCard.level}</Text>
-        <Text style={styles.modalDescription}>{selectedCard.desc}</Text>
+        <Image source={{ uri: getValueOrUnknown(selectedCard.card_images[0]?.image_url) }} style={styles.modalImage} />
+        <Text style={styles.modalTitle}>{getValueOrUnknown(selectedCard.name)}</Text>
+        <Text style={styles.modalDescription}>ID: {getValueOrUnknown(selectedCard.id)}</Text>
+        <Text style={styles.modalDescription}>Tipo: {getValueOrUnknown(selectedCard.type)}</Text>
+        <Text style={styles.modalDescription}>Ataque: {getValueOrUnknown(selectedCard.atk)}</Text>
+        <Text style={styles.modalDescription}>Defesa: {getValueOrUnknown(selectedCard.def)}</Text>
+        <Text style={styles.modalDescription}>Atributo: {getValueOrUnknown(selectedCard.attribute)}</Text>
+        <Text style={styles.modalDescription}>Level: {getValueOrUnknown(selectedCard.level)}</Text>
+        <Text style={styles.modalDescription}>{getValueOrUnknown(selectedCard.desc)}</Text>
         <Pressable style={styles.modalButton} onPress={() => setModalVisible(false)}>
           <Text style={styles.modalButtonText}>Close</Text>
         </Pressable>
@@ -61,15 +65,15 @@ const CardList = ({ navigation }) => {
   };
 
   return (
-    <ImageBackground source={require('./../assets/Yugioh_Card_Back.jpg')} style={styles.backgroundImage}>
+    <ImageBackground source={require('./../assets/fundo.png')} style={styles.backgroundImage}>
       <FlatList
         data={cards}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => handleCardPress(item)}>
             <View style={styles.cardContainer}>
-              <Image source={{ uri: item.card_images[0].image_url }} style={styles.cardImage} />
-              <Text style={styles.cardName}>{item.name}</Text>
+              <Image source={{ uri: getValueOrUnknown(item.card_images[0]?.image_url) }} style={styles.cardImage} />
+              <Text style={styles.cardName}>{getValueOrUnknown(item.name)}</Text>
             </View>
           </TouchableOpacity>
         )}
