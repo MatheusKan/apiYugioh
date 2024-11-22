@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert, TextInput, ImageBackground } from "react-native";
-import { auth } from "../firebase"; // Certifique-se de que o auth está configurado corretamente
+import { auth } from "../firebase"; 
 import { signInWithEmailAndPassword } from "firebase/auth";
  
 export default function Login({ navigation }) {
@@ -15,26 +15,31 @@ export default function Login({ navigation }) {
             if (initializing) setInitializing(false);
         });
  
-        return unsubscribe; // Limpa o listener quando o componente é desmontado
+        return unsubscribe; 
     }, [initializing]);
  
     function logar() {
         signInWithEmailAndPassword(auth, email, senha)
-            .then(() => {
-                navigation.navigate('Rotas', { email });
-            })
+            // .then(() => {
+            //    // navigation.navigate('Rotas', { email });
+            // })
             .catch((error) => {
-                Alert.alert("Erro", error.message); // Use Alert para mensagens de erro
+                let message = 'Erro ao realizar login. Tente novamente!';
+                if (error.code === 'auth/invalid-email') {
+                    message = 'O email informado é inválido. Verifique e tente novamente!';
+                } else if (error.code === 'auth/wrong-password') {
+                    message = 'Senha incorreta. Por favor, verifique sua senha!';
+                } else if (error.code === 'auth/user-not-found') {
+                    message = 'Nenhum usuário encontrado com esse email!';
+                }
+                
+                Alert.alert("Erro", message, [{ text: "OK", style: "default" }]);
             });
-    }
- 
-    if (initializing) {
-        return <View><Text>Carregando...</Text></View>; // Adicione uma tela de carregamento
     }
  
     return (
     <ImageBackground 
-      source={require('./../assets/login.jpg')} // Substitua pelo caminho da sua imagem
+      source={require('./../assets/login.jpg')} 
       style={estilo.backgroundImage}
     >
         <View style={estilo.container}>

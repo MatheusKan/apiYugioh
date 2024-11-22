@@ -1,17 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet, ImageBackground, ScrollView, Button } from 'react-native';
-import { signOut } from 'firebase/auth';  // Importando o signOut do Firebase
-import { auth } from './../firebase'; // Importe a configuração do Firebase
-import { useNavigation } from '@react-navigation/native'; // Importando o hook useNavigation
+import { signOut } from 'firebase/auth';  
+import { auth } from './../firebase';
+import { useNavigation } from '@react-navigation/native';
 
 const Home = () => {
-  const navigation = useNavigation();  // Usando o hook useNavigation para obter o acesso à navegação
+  const navigation = useNavigation(); 
 
-  // Função para fazer logout
   const handleLogout = async () => {
     try {
-      await signOut(auth);  // Faz logout do Firebase
-      navigation.replace('Auth');  // Redireciona para a tela de login
+      await signOut(auth);  
+      //navigation.replace('Login');
     } catch (error) {
       console.error('Erro ao fazer logout:', error.message);
     }
@@ -19,7 +18,7 @@ const Home = () => {
 
   return (
     <ImageBackground 
-      source={require('./../assets/back.jpg')} // Substitua pelo caminho da sua imagem
+      source={require('./../assets/back.jpg')} 
       style={styles.backgroundImage}
     >
       <ScrollView contentContainerStyle={styles.container}>
@@ -86,8 +85,7 @@ const styles = StyleSheet.create({
   },
   logoutButtonContainer: {
     marginTop: 25,
-    width: '80%'
-
+    width: '80%',
   }
 });
 

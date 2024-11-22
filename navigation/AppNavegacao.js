@@ -3,35 +3,35 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'react-native';
-import { onAuthStateChanged } from 'firebase/auth'; // Monitoramento de autenticação
-import { auth } from '../firebase'; // Importando o Firebase
+import { onAuthStateChanged } from 'firebase/auth'; 
+import { auth } from '../firebase'; 
 
 import Home from './../components/Home';
 import CardList from './../components/CardList';
 import ApiYugioh from './../components/ApiYugioh';
-import AuthScreen from './../components/AuthScreen'; // Tela de login
+import AuthScreen from './../components/AuthScreen'; 
 
 const Tab = createBottomTabNavigator();
 
 function AppNavegacao() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Monitorando o estado de autenticação
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setIsAuthenticated(true); // Usuário logado
+        setIsAuthenticated(true); 
       } else {
-        setIsAuthenticated(false); // Usuário não logado
+        setIsAuthenticated(false); 
       }
     });
 
-    // Limpando o listener ao desmontar o componente
+    
     return unsubscribe;
   }, []);
 
   if (!isAuthenticated) {
-    // Se não estiver autenticado, exibe a tela de login
+    
     return (
       <NavigationContainer>
         <AuthScreen />
@@ -39,7 +39,7 @@ function AppNavegacao() {
     );
   }
 
-  // Se estiver autenticado, exibe a navegação com abas
+  
   return (
     <NavigationContainer>
       <Tab.Navigator

@@ -11,8 +11,7 @@ export default function RotaAcesso() {
     return(
         <Stack.Navigator>
             <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
-            <Stack.Screen name="Rotas" component={Rotas}options={{headerShown:false}}/>
-
+            <Stack.Screen name="Rotas" component={Rotas} options={{headerShown:false}}/>
         </Stack.Navigator>
     );
 }
